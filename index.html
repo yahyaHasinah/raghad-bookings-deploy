@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>مودلز السعودية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <header class="topbar">
+      <button class="brand-mark" id="accountPanelToggle" type="button" aria-label="Account panel">
+        <span id="accountAvatar">S</span>
+        <strong id="accountLabel" data-i18n="brandName">مودلز السعودية</strong>
+      </button>
+      <nav class="top-actions" aria-label="Main navigation">
+        <button class="nav-button active" data-view-target="brand" data-i18n="navBook">الحجز</button>
+        <button class="nav-button" data-view-target="models" data-i18n="navModels">المودلز</button>
+        <button class="nav-button hidden" data-view-target="schedule" data-i18n="navSchedule">الجدول</button>
+        <button class="nav-button" data-view-target="work" data-i18n="navWork">الأعمال</button>
+        <button class="nav-button" data-view-target="owner" data-i18n="navAdmin">الإدارة</button>
+        <button class="nav-button lang-button" id="languageToggle" type="button">English</button>
+        <button class="primary-button compact-button hidden" id="signOutButton" data-i18n="signOut">تسجيل الخروج</button>
+      </nav>
+    </header>
+
+    <aside class="account-panel hidden" id="accountPanel" aria-label="Account panel">
+      <div class="account-panel-head">
+        <div>
+          <p class="eyebrow">الحساب</p>
+          <h2 id="accountPanelTitle">مودلز السعودية</h2>
+        </div>
+        <button class="ghost-button" id="accountPanelClose" type="button">إغلاق</button>
+      </div>
+      <div class="account-menu" id="accountMenu"></div>
+      <div class="account-panel-body" id="accountPanelBody"></div>
+    </aside>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="heroEyebrow">وكالة مودلز في السعودية</p>
+          <h1 data-i18n="heroTitle">حجز مودلز فاخر للحملات، الأزياء، الجمال، وأيام التصوير.</h1>
+          <p data-i18n="heroText">اختَر المودل، المدينة، التاريخ، الساعة، نوع التسعير، ورابط الموقع. تتم مراجعة الطلبات قبل التأكيد، خصوصا عند تغيير المدينة أو وجود متطلبات إنتاج خاصة.</p>
+          <div class="hero-metrics">
+            <span><strong id="modelCount">8</strong> <i data-i18n="metricModels">مودلز</i></span>
+            <span><strong id="pendingCount">0</strong> <i data-i18n="metricPending">قيد المراجعة</i></span>
+            <span><strong id="acceptedCount">0</strong> <i data-i18n="metricConfirmed">مؤكد</i></span>
+          </div>
+        </div>
+
+        <article class="hero-card" id="authPanel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow" data-i18n="startHere">ابدأ هنا</p>
+              <h2 data-i18n="authTitle">سجّل الدخول أو أنشئ حساب</h2>
+            </div>
+            <span class="pill" data-i18n="free">مجاني</span>
+          </div>
+          <div class="segmented">
+            <button class="segment active" data-auth="login" data-i18n="login">تسجيل الدخول</button>
+            <button class="segment" data-auth="signup" data-i18n="signup">إنشاء حساب</button>
+          </div>
+          <div class="role-choice hidden" id="roleChoice">
+            <label class="role-card active">
+              <input type="radio" name="accountRole" value="brand" checked />
+              <span data-i18n="brandRole">علامة تجارية / حجز</span>
+              <small data-i18n="brandRoleText">لطلب المودلز للحملات وجلسات التصوير.</small>
+            </label>
+            <label class="role-card">
+              <input type="radio" name="accountRole" value="model" />
+              <span data-i18n="modelRole">مودل</span>
+              <small data-i18n="modelRoleText">تقديم طلب للانضمام إلى قائمة الوكالة.</small>
+            </label>
+          </div>
+          <form id="authForm" class="form">
+            <label>
+              <span data-i18n="username">اسم المستخدم</span>
+              <input type="text" id="username" autocomplete="username" required minlength="3" />
+            </label>
+            <label>
+              <span data-i18n="password">كلمة المرور</span>
+              <input type="password" id="password" autocomplete="current-password" required minlength="4" />
+            </label>
+            <div class="model-only hidden" id="modelSignupFields">
+              <div class="grid two compact">
+                <label>
+                  <span data-i18n="city">المدينة</span>
+                  <select id="modelCity">
+                    <option>الرياض</option>
+                    <option>جدة</option>
+                    <option>الخبر</option>
+                    <option>الدمام</option>
+                    <option>العلا</option>
+                  </select>
+                </label>
+                <label>
+                  <span data-i18n="portfolioLink">رابط البورتفوليو</span>
+                  <input type="url" id="portfolioLink" placeholder="https://instagram.com/..." />
+                </label>
+              </div>
+              <label>
+                <span data-i18n="modelProfile">نبذة قصيرة عن خبرتك</span>
+                <textarea id="modelBio" rows="3" placeholder="الخبرة، نوع الحملات، أوقات التوفر"></textarea>
+              </label>
+            </div>
+            <label class="check-row">
+              <input type="checkbox" id="rememberMe" checked />
+              <span data-i18n="rememberMe">تذكرني</span>
+            </label>
+            <button class="primary-button" type="submit" id="authSubmit" data-i18n="login">تسجيل الدخول</button>
+            <p class="message" id="authMessage"></p>
+          </form>
+        </article>
+      </section>
+
+      <section class="quick-book hidden" id="bookingPanel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-i18n="priorityBooking">حجز أولوية</p>
+            <h2 data-i18n="requestSession">طلب جلسة مودل</h2>
+            <p data-i18n="requestSessionText">اختَر من القائمة أو اختر "ساعدوني بالاختيار" وستراجع الوكالة الأنسب لك.</p>
+          </div>
+          <span class="pill" id="currentBrand"></span>
+        </div>
+        <div class="booking-wizard" id="bookingWizard">
+          <div class="wizard-progress">
+            <span id="wizardStepText">1 / 9</span>
+            <div><i id="wizardProgressBar"></i></div>
+          </div>
+          <div class="wizard-screen" id="wizardScreen"></div>
+          <div class="wizard-actions">
+            <button class="ghost-button" type="button" id="wizardBack">السابق</button>
+            <button class="primary-button" type="button" id="wizardNext">التالي</button>
+          </div>
+          <p class="message" id="wizardMessage"></p>
+        </div>
+        <form id="bookingForm" class="booking-grid">
+          <label>
+            <span data-i18n="brandNameLabel">اسم العلامة التجارية</span>
+            <input type="text" id="brandName" required />
+          </label>
+          <label>
+            <span data-i18n="contactNumber">رقم التواصل</span>
+            <input type="tel" id="contactNumber" required />
+          </label>
+          <label>
+            <span data-i18n="model">المودل</span>
+            <select id="modelSelect" required></select>
+          </label>
+          <label>
+            <span data-i18n="pricingChoice">نوع التسعير</span>
+            <select id="pricingChoice" required>
+              <option value="hour" data-i18n="priceHour">السعر بالساعة</option>
+              <option value="outfit" data-i18n="priceOutfit">السعر بالفستان / اللوك</option>
+            </select>
+          </label>
+          <label>
+            <span data-i18n="campaignTitle">عنوان الحملة</span>
+            <input type="text" id="campaignTitle" required />
+          </label>
+          <label>
+            <span data-i18n="requestedCity">المدينة المطلوبة</span>
+            <select id="requestedCity" required>
+              <option>الرياض</option>
+              <option>جدة</option>
+              <option>الخبر</option>
+              <option>الدمام</option>
+              <option>العلا</option>
+              <option>مدينة سعودية أخرى</option>
+            </select>
+          </label>
+          <label>
+            <span data-i18n="date">التاريخ</span>
+            <input type="date" id="bookingDate" required />
+          </label>
+          <label>
+            <span data-i18n="startTime">وقت البداية</span>
+            <select id="startTime" required></select>
+          </label>
+          <label>
+            <span data-i18n="duration">المدة</span>
+            <select id="duration" required>
+              <option value="1">ساعة واحدة</option>
+              <option value="2">ساعتان</option>
+              <option value="3">3 ساعات</option>
+              <option value="4">4 ساعات</option>
+              <option value="5">5 ساعات</option>
+              <option value="6">6 ساعات</option>
+            </select>
+          </label>
+          <label>
+            <span data-i18n="outfits">عدد اللوكات / الفساتين</span>
+            <input type="number" id="outfitCount" min="1" max="20" value="1" />
+          </label>
+          <label class="wide-field">
+            <span data-i18n="locationLink">رابط الموقع</span>
+            <input type="url" id="locationLink" placeholder="https://maps.google.com/..." required />
+          </label>
+          <label>
+            <span data-i18n="photographer">تفاصيل المصور</span>
+            <select id="photographer">
+              <option value="No photographer">لا يوجد مصور</option>
+              <option value="Female photographer">مصورة امرأة</option>
+              <option value="Male photographer">مصور رجل</option>
+              <option value="Team photographer">فريق تصوير</option>
+            </select>
+          </label>
+          <label class="wide-field">
+            <span data-i18n="notes">ملاحظات</span>
+            <textarea id="bookingNotes" rows="4" placeholder="فكرة التصوير، الملابس، طلب مدينة إضافية، متطلبات العلامة التجارية"></textarea>
+          </label>
+          <div class="rules-box wide-field">
+            <h3 data-i18n="rulesTitle">الشروط قبل تأكيد الحجز</h3>
+            <label class="check-row">
+              <input type="checkbox" class="rule-check" required />
+              <span data-i18n="rule1">الدفع نقدا فقط إلا إذا تم الاتفاق قبل الحجز.</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" class="rule-check" required />
+              <span data-i18n="rule2">يجب توضيح وجود مصور من عدمه، ويفضل أن تكون المصورة امرأة.</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" class="rule-check" required />
+              <span data-i18n="rule3">عند تغيير موعد التصوير، يجب التواصل مع الوكالة قبل الموعد بثلاثة أيام على الأقل.</span>
+            </label>
+          </div>
+          <div class="price-preview wide-field" id="pricePreview">اختَر مودل لعرض السعر التقريبي.</div>
+          <button class="primary-button wide-field" type="submit" data-i18n="sendReview">إرسال الطلب للمراجعة</button>
+          <p class="message wide-field" id="bookingMessage"></p>
+        </form>
+      </section>
+
+      <section class="view active" id="brandView">
+        <article class="panel hidden" id="brandRequestsPanel">
+          <div class="panel-heading">
+            <h2 data-i18n="yourRequests">طلبات الحجز الخاصة بك</h2>
+            <span class="pill" id="brandRequestCount">0 requests</span>
+          </div>
+          <div class="request-list" id="brandRequests"></div>
+        </article>
+
+        <section class="home-models panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">مودلز السعودية</p>
+              <h2>اختَر المودل المناسب لفكرة حملتك</h2>
+              <p>اسحب يمينا ويسارا لمشاهدة المودلز، ثم افتح الملف لمعرفة التفاصيل والتوفر.</p>
+            </div>
+          </div>
+          <div class="model-slider" id="homeModelSlider" dir="rtl"></div>
+        </section>
+
+        <section class="agency-intro">
+          <div>
+            <p class="eyebrow" data-i18n="agencySystem">نظام الوكالة</p>
+            <h2 data-i18n="agencyTitle">منصة واحدة لحجز المودلز في السعودية، المراجعة، الجدولة، وتنسيق المدن.</h2>
+          </div>
+          <div class="intro-grid">
+            <article>
+              <span>01</span>
+              <h3 data-i18n="intro1Title">قائمة المودلز</h3>
+              <p data-i18n="intro1Text">لكل مودل ملف، مدينة، أسعار، وحالة حجز. طلبات انضمام المودلز تذهب للإدارة قبل الظهور للعامة.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3 data-i18n="intro2Title">طلبات العلامات التجارية</h3>
+              <p data-i18n="intro2Text">تحدد العلامات التجارية الساعات، رابط الموقع، تفاصيل المصور، ونوع التسعير قبل موافقة الوكالة.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3 data-i18n="intro3Title">مدن السعودية</h3>
+              <p data-i18n="intro3Text">الرياض، جدة، الخبر، الدمام، العلا، وطلبات المدن الخاصة يمكن تنسيقها مع رسوم إضافية بعد المراجعة.</p>
+            </article>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="modelsView">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-i18n="demoRoster">قائمة تجريبية</p>
+            <h2 data-i18n="chooseModel">اختَر ملف المودل</h2>
+          </div>
+          <button class="ghost-button" id="clearModelButton" data-i18n="clearSelection">مسح الاختيار</button>
+        </div>
+        <div class="models-grid" id="modelsGrid"></div>
+      </section>
+
+      <section class="view" id="modelProfileView">
+        <article id="modelProfilePage"></article>
+      </section>
+
+      <section class="view" id="scheduleView">
+        <div class="schedule-toolbar">
+          <div>
+            <p class="eyebrow" data-i18n="next30">الأيام الـ 30 القادمة</p>
+            <h2 data-i18n="scheduleHour">الجدول بالساعة</h2>
+            <p id="scheduleRange"></p>
+          </div>
+          <div class="legend">
+            <span><i class="dot open"></i><b data-i18n="open">متاح</b></span>
+            <span><i class="dot pending"></i><b data-i18n="pending">قيد المراجعة</b></span>
+            <span><i class="dot accepted"></i><b data-i18n="booked">محجوز</b></span>
+            <span><i class="dot refused"></i><b data-i18n="refused">مرفوض</b></span>
+          </div>
+        </div>
+        <div class="schedule-grid" id="scheduleGrid"></div>
+      </section>
+
+      <section class="view" id="workView">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-i18n="campaignProof">أعمال سابقة</p>
+            <h2 data-i18n="featuredWork">الأعمال المميزة</h2>
+            <p data-i18n="featuredText">ستظهر منشورات إنستغرام وفيديوهات تيك توك الخاصة بالحملات هنا عند إضافة الروابط.</p>
+          </div>
+        </div>
+        <div class="media-grid" id="mediaGrid"></div>
+      </section>
+
+      <section class="view" id="ownerView">
+        <div class="owner-login panel" id="ownerLogin">
+          <h2 data-i18n="adminAccess">دخول الإدارة</h2>
+          <form id="ownerLoginForm" class="form">
+            <label>
+              <span data-i18n="password">كلمة المرور</span>
+              <input type="password" id="ownerPassword" required />
+            </label>
+            <button class="primary-button" type="submit" data-i18n="openDashboard">فتح لوحة التحكم</button>
+            <p class="message" id="ownerMessage"></p>
+          </form>
+        </div>
+
+        <div id="ownerDashboard" class="hidden">
+          <div class="grid two">
+            <article class="panel">
+              <div class="panel-heading">
+                <h2 data-i18n="bookingRequests">طلبات الحجز</h2>
+                <span class="pill" id="ownerRequestCount">0 total</span>
+              </div>
+              <div class="request-list" id="ownerRequests"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-heading">
+                <h2 data-i18n="modelApplications">طلبات انضمام المودلز</h2>
+                <span class="pill" id="modelApplicationCount">0 pending</span>
+              </div>
+              <div class="request-list" id="modelApplications"></div>
+            </article>
+          </div>
+          <article class="panel media-admin">
+            <div class="panel-heading">
+              <h2 data-i18n="addMedia">إضافة أعمال</h2>
+              <span class="pill">Instagram / TikTok</span>
+            </div>
+            <form id="mediaForm" class="form inline-form">
+              <label>
+                <span data-i18n="platform">المنصة</span>
+                <select id="mediaPlatform">
+                  <option value="instagram">منشور إنستغرام</option>
+                  <option value="tiktok">فيديو تيك توك</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="link">الرابط</span>
+                <input type="url" id="mediaUrl" required placeholder="الصق رابط المنشور أو الفيديو" />
+              </label>
+              <button class="primary-button" type="submit" data-i18n="addMediaButton">إضافة</button>
+              <p class="message" id="mediaMessage"></p>
+            </form>
+            <div class="media-list" id="ownerMediaList"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <template id="requestTemplate">
+      <article class="request-card">
+        <div class="request-top">
+          <div>
+            <h3></h3>
+            <p class="muted"></p>
+          </div>
+          <span class="status"></span>
+        </div>
+        <dl></dl>
+        <div class="request-actions"></div>
+      </article>
+    </template>
+
+    <script async src="https://www.instagram.com/embed.js"></script>
+    <script async src="https://www.tiktok.com/embed.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
